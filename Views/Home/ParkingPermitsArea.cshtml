@@ -1,0 +1,50 @@
+﻿@model List<ParkingProjectClient.Models.ParkingPermitsArea>
+
+@{
+    ViewData["Title"] = "Parking Areas";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Parking Areas</h1>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Parking Area ID</th>
+                <th>Effective Date</th>
+                <th>Expiration Date</th>
+                <th>License Plate</th>
+                <th>Parking Area Name</th>
+                <th>Inactive</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var permit in Model)
+            {
+                <tr>
+                    <td colspan="7">
+                        <a href="@Url.Action("ParkingPermitsAreaDetail", "Home", new { id = permit.ID })" >
+                            <div class="row">
+                                <div class="col">@permit.ID</div>
+                                <div class="col">@permit.ParkingAreaID</div>
+                                <div class="col">@permit.EffectiveDate.ToShortDateString()</div>
+                                <div class="col">@permit.ExpirationDate.ToShortDateString()</div>
+                                <div class="col">@permit.LicensePlate</div>
+                                <div class="col">@permit.ParkingAreaName</div>
+                                <div class="col">@permit.Inactive</div>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No parking areas available.</p>
+}

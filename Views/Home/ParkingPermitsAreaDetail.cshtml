@@ -1,0 +1,45 @@
+﻿@model ParkingProjectClient.Models.ParkingPermits
+
+@{
+    ViewData["Title"] = "Parking Permit Details";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Parking Permit Details</h1>
+</div>
+
+@if (Model != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Parking Area ID</th>
+                <th>Effective Date</th>
+                <th>Expiration Date</th>
+                <th>License Plate</th>
+                <th>Parking Area Name</th>
+                <th>Inactive</th>
+                <th>Longitude</th>
+                <th>Latitude</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Id</td>
+                <td>@Model.ParkingAreaID</td>
+                <td>@Model.EffectiveDate.ToShortDateString()</td>
+                <td>@Model.ExpirationDate.ToShortDateString()</td>
+                <td>@Model.LicensePlate</td>
+                <td>@Model.ParkingAreaName</td>
+                <td>@Model.Inactive</td>
+                <td>@Model.Longitude</td>
+                <td>@Model.Latitude</td>
+            </tr>
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No parking permit details available.</p>
+}

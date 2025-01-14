@@ -1,7 +1,13 @@
+using ParkingProjectClient.Services.Interfaces;
+using ParkingProjectClient.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddTransient<IParkingAPIService, ParkingAPIService>();
+builder.Services.AddTransient<IParkingService, ParkingService>();
 
 var app = builder.Build();
 
@@ -22,6 +28,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=ParkingPermitsArea}/{id?}");
+
 
 app.Run();
