@@ -1,4 +1,4 @@
-﻿@model ParkingProjectClient.Models.ParkingPermits
+﻿@model ParkingProjectClient.Models.ParkingPermitDetails
 
 @{
     ViewData["Title"] = "Parking Permit Details";
@@ -13,8 +13,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Parking Area ID</th>
                 <th>Effective Date</th>
                 <th>Expiration Date</th>
                 <th>License Plate</th>
@@ -27,7 +25,6 @@
         <tbody>
             <tr>
                 <td>@Model.Id</td>
-                <td>@Model.ParkingAreaID</td>
                 <td>@Model.EffectiveDate.ToShortDateString()</td>
                 <td>@Model.ExpirationDate.ToShortDateString()</td>
                 <td>@Model.LicensePlate</td>

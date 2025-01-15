@@ -1,4 +1,4 @@
-﻿@model List<ParkingProjectClient.Models.ParkingPermitsArea>
+﻿@model List<ParkingProjectClient.Models.ParkingPermits>
 
 @{
     ViewData["Title"] = "Parking Areas";
@@ -27,10 +27,8 @@
             {
                 <tr>
                     <td colspan="7">
-                        <a href="@Url.Action("ParkingPermitsAreaDetail", "Home", new { id = permit.ID })" >
+                        <a href="@Url.Action("ParkingPermits", "Home", new { id = permit.Id })" >
                             <div class="row">
-                                <div class="col">@permit.ID</div>
-                                <div class="col">@permit.ParkingAreaID</div>
                                 <div class="col">@permit.EffectiveDate.ToShortDateString()</div>
                                 <div class="col">@permit.ExpirationDate.ToShortDateString()</div>
                                 <div class="col">@permit.LicensePlate</div>

@@ -14,14 +14,14 @@ namespace ParkingProjectClient.Services
             _parkingApiService = parkingApiService;
         }
 
-        public List<ParkingPermitsArea> GetAllParkingPermitsByArea()
+        public async Task<List<ParkingPermits>> GetAllParkingPermitsByArea()
         {
-            return _parkingApiService.GetAllParkingPermitsByAreaApi();
+            return await _parkingApiService.GetAllParkingPermitsByAreaApi();
         }
 
-        public ParkingPermits GetParkingPermitById(int id)
-        {
-            return _parkingApiService.GetParkingPermitByIDApi(id);
-        }
+        // public ParkingPermits GetParkingPermitById(int id)
+        // {
+        //     return _parkingApiService.GetParkingPermitByIDApi(id);
+        // }
     }
 }

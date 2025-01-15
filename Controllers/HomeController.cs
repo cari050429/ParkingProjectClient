@@ -3,6 +3,7 @@ using ParkingProjectClient.Models;
 using ParkingProjectClient.Services;
 using ParkingProjectClient.Services.Interfaces;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace ParkingProjectClient.Controllers
 {
@@ -26,17 +27,18 @@ namespace ParkingProjectClient.Controllers
         public IActionResult ParkingPermitsAreaDetail(int id)
 
         {
-            ParkingPermits parkingPermit = _parkingService.GetParkingPermitById(id);
+            // ParkingPermits parkingPermit = _parkingService.GetParkingPermitById(id);
 
 
-            return View(parkingPermit);
+            //return View(parkingPermit);
+            return View();
 
         }
 
-        public IActionResult ParkingPermitsArea()
+        public async Task<IActionResult> ParkingPermits()
 
         {
-            List<ParkingPermitsArea> parkingAreasList = _parkingService.GetAllParkingPermitsByArea();
+            List<ParkingPermits> parkingAreasList = await _parkingService.GetAllParkingPermitsByArea();
 
             return View(parkingAreasList);
 
