@@ -15,7 +15,7 @@ namespace ParkingProjectClient.Services
             _parkingApiService = parkingApiService;
         }
 
-        public async Task<List<ParkingPermits>> GetAllParkingPermitsByArea()
+        public async Task<List<ParkingPermits>> GetAllParkingPermits()
         {
             return await _parkingApiService.GetAllParkingPermitsByAreaApi();
         }

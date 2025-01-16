@@ -2,7 +2,11 @@
 
 @{
     ViewData["Title"] = "Parking Permits";
-    string searchQuery = Context.Request.Query["searchQuery"].ToString() ?? "";
+    string parkingAreaName = Context.Request.Query["parkingAreaName"].ToString() ?? "";
+    string licensePlate = Context.Request.Query["licensePlate"].ToString() ?? "";
+    string inactiveFilter = Context.Request.Query["inactiveFilter"].ToString() ?? "";
+    string effectiveDateFilter = Context.Request.Query["effectiveDateFilter"].ToString() ?? "";
+    string expirationDateFilter = Context.Request.Query["expirationDateFilter"].ToString() ?? "";
 }
 
 <div class="container mt-4">
@@ -11,18 +15,76 @@
     </div>
 
     <form method="get" class="mb-4">
-        <div class="input-group">
-            <input 
-                type="text" 
-                name="searchQuery" 
-                class="form-control" 
-                placeholder="Search by License Plate" 
-                value="@searchQuery" />
+        <div class="row g-3">
+            <!-- Search by License Plate -->
+            <div class="col-md-3">
+                <label for="licensePlate" class="form-label">License Plate</label>
+                <input 
+                    type="text" 
+                    name="licensePlate" 
+                    id="licensePlate" 
+                    class="form-control" 
+                    placeholder="Enter license plate" 
+                    value="@licensePlate" />
+            </div>
+
+            <div class="col-md-3">
+                <label for="parkingAreaName" class="form-label">Parking Area Name</label>
+                <input 
+                    type="text" 
+                    name="parkingAreaName" 
+                    id="parkingAreaName" 
+                    class="form-control" 
+                    placeholder="Enter parking area name" 
+                    value="@parkingAreaName" />
+            </div>
+
+           <div class="col-md-2">
+    <label for="inactiveFilter" class="form-label">Status</label>
+            <select 
+                name="inactiveFilter" 
+                id="inactiveFilter" 
+                class="form-select">
+                <option value="">All</option>
+                @{
+                    var selectedInactive = ViewBag.InactiveFilter == "true" ? "selected" : null;
+                    var selectedActive = ViewBag.InactiveFilter == "false" ? "selected" : null;
+                }
+                <option value="true" selected="@selectedInactive">Inactive</option>
+                <option value="false" selected="@selectedActive">Active</option>
+            </select>
+        </div>
+
+            <!-- Filter by Effective Date -->
+            <div class="col-md-2">
+                <label for="effectiveDateFilter" class="form-label">Effective Date</label>
+                <input 
+                    type="date" 
+                    name="effectiveDateFilter" 
+                    id="effectiveDateFilter" 
+                    class="form-control" 
+                    value="@effectiveDateFilter" />
+            </div>
+
+            <!-- Filter by Expiration Date -->
+            <div class="col-md-2">
+                <label for="expirationDateFilter" class="form-label">Expiration Date</label>
+                <input 
+                    type="date" 
+                    name="expirationDateFilter" 
+                    id="expirationDateFilter" 
+                    class="form-control" 
+                    value="@expirationDateFilter" />
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="text-end mt-3">
             <button type="submit" class="btn btn-primary">
-                <i class="bi bi-search"></i> Search
+                <i class="bi bi-search"></i> Apply Filters
             </button>
             <a href="@Url.Action("ParkingPermits", "Home")" class="btn btn-secondary">
-                <i class="bi bi-x-circle"></i> Clear
+                <i class="bi bi-x-circle"></i> Clear Filters
             </a>
         </div>
     </form>
@@ -36,7 +98,7 @@
                     <th>Expiration Date</th>
                     <th>License Plate</th>
                     <th>Parking Area Name</th>
-                    <th>Inactive</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>

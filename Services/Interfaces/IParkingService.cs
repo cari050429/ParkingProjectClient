@@ -4,7 +4,7 @@ namespace ParkingProjectClient.Services.Interfaces
 {
     public interface IParkingService
     {
-        Task<List<ParkingPermits>> GetAllParkingPermitsByArea();
+        Task<List<ParkingPermits>> GetAllParkingPermits();
 
         Task<ParkingPermitDetails> GetParkingPermitById(int parkingId);
         Task<ParkingArea> GetParkingAreaById(int id);

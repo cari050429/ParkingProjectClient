@@ -40,19 +40,56 @@ namespace ParkingProjectClient.Controllers
             return View(parkingPermit);
         }
 
-        public async Task<IActionResult> ParkingPermits(string searchQuery)
+        public async Task<IActionResult> ParkingPermits(
+            string parkingAreaName,
+    string licensePlate, 
+    string inactiveFilter, 
+    string effectiveDateFilter, 
+    string expirationDateFilter)
+{
+    List<ParkingPermits> parkingPermits = await _parkingService.GetAllParkingPermits();
 
-        {
-            List<ParkingPermits> parkingPermits = await _parkingService.GetAllParkingPermitsByArea();
 
-            if(!string.IsNullOrEmpty(searchQuery) && parkingPermits.Count > 0)
-            {
-                parkingPermits = parkingPermits.Where(pp => pp.LicensePlate.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
-            }
+    if (!string.IsNullOrEmpty(licensePlate))
+    {
+        parkingPermits = parkingPermits
+            .Where(pp => pp.LicensePlate.Contains(licensePlate, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+    }
 
-            return View(parkingPermits);
+    if (!string.IsNullOrEmpty(parkingAreaName))
+    {
+        parkingPermits = parkingPermits
+            .Where(pp => pp.ParkingAreaName.Contains(parkingAreaName, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+    }
 
-        }
+    if (!string.IsNullOrEmpty(inactiveFilter))
+    {
+        bool isInactive = inactiveFilter.Equals("true", StringComparison.OrdinalIgnoreCase);
+        ViewBag.InactiveFilter = isInactive ? "true" : "false";
+        parkingPermits = parkingPermits
+            .Where(pp => pp.Inactive == isInactive)
+            .ToList();
+    }
+
+    if (DateTime.TryParse(effectiveDateFilter, out DateTime effectiveDate))
+    {
+        parkingPermits = parkingPermits
+            .Where(pp => pp.EffectiveDate.Date == effectiveDate.Date)
+            .ToList();
+    }
+
+    if (DateTime.TryParse(expirationDateFilter, out DateTime expirationDate))
+    {
+        parkingPermits = parkingPermits
+            .Where(pp => pp.ExpirationDate.Date == expirationDate.Date)
+            .ToList();
+    }
+
+    return View(parkingPermits);
+}
+
 
         public async Task<IActionResult> ParkingAreaTypes(string searchQuery)
 
@@ -97,7 +134,7 @@ namespace ParkingProjectClient.Controllers
             
             return View();
         }
-        public async Task <ActionResult> CreateParkingAreaType()
+        public  ActionResult CreateParkingAreaType()
         {
            
             return View();
