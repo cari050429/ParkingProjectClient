@@ -8,6 +8,13 @@
     <h1 class="display-4">Update Parking Permit</h1>
 </div>
 
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
 <form asp-action="UpdateParkingPermit" method="post">
     <div class="form-group">
     <label asp-for="ParkingAreaId" class="control-label">Parking Area Name</label>
@@ -42,10 +49,6 @@
         <div class="form-check">
             <input asp-for="Inactive" type="checkbox" class="form-check-input" />
         </div>
-    </div>
-
-    <div class="form-group">
-        <input asp-for="Id" type="hidden" />
     </div>
 
     <button type="submit" class="btn btn-primary">Update</button>

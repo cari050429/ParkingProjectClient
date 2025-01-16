@@ -83,7 +83,7 @@ namespace ParkingProjectClient.Controllers
         {
             var parkingAreaTypes = await _parkingService.GetAllParkingAreaTypes();
     
-            ViewBag.ParkingAreas = new SelectList(parkingAreaTypes, "Id", "ParkingAreaTypeDescription");
+            ViewBag.parkingAreaTypes = new SelectList(parkingAreaTypes, "Id", "ParkingAreaTypeDescription");
             
             return View();
         }
@@ -101,7 +101,7 @@ namespace ParkingProjectClient.Controllers
             {
                 return RedirectToAction("ParkingAreaTypes"); 
             }
-             ViewBag.ErrorMessage = "There was an issue creating the parking permit.";
+             ViewBag.ErrorMessage = "There was an issue creating the parking area type.";
             return View(parkingareatypecreation);
         }
         [HttpPost]
@@ -118,15 +118,16 @@ namespace ParkingProjectClient.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> DeleteParkingPermit(int id)
+        public async Task<ActionResult> DeleteParkingPermit(int permitId)
         {
-            bool isDeleted = await _parkingService.DeleteParkingPermit(id);
+            bool isDeleted = await _parkingService.DeleteParkingPermit(permitId);
             if (isDeleted)
             {
+                TempData["ErrorMessage"] = null;
                 return RedirectToAction("ParkingPermits"); 
             }
-            ViewBag.ErrorMessage = "There was an issue deleting the parking permit";
-            return RedirectToAction("ParkingPermits"); 
+            TempData["ErrorMessage"] = "There was an issue deleting the parking area";
+            return RedirectToAction("ParkingPermitDetails", new { id = permitId }); 
         }
 
         [HttpGet]
@@ -135,9 +136,10 @@ namespace ParkingProjectClient.Controllers
             bool isDeleted = await _parkingService.DeleteParkingArea(id);
              if (isDeleted)
             {
+                TempData["ErrorMessage"] = null;
                 return RedirectToAction("ParkingAreas"); 
             }
-            ViewBag.ErrorMessage = "There was an issue deleting the parking area";
+            TempData["ErrorMessage"] = "There was an issue deleting the parking area";
             return RedirectToAction("ParkingAreas");
         }
 
@@ -147,9 +149,10 @@ namespace ParkingProjectClient.Controllers
             bool isDeleted = await _parkingService.DeleteParkingAreaType(id);
             if (isDeleted)
             {
+                TempData["ErrorMessage"] = null;
                 return RedirectToAction("ParkingAreaTypes"); 
             }
-            ViewBag.ErrorMessage = "There was an issue deleting the parking area type";
+            TempData["ErrorMessage"] = "There was an issue deleting the parking area type";
             return RedirectToAction("ParkingAreaTypes");
         }
 

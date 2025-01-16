@@ -7,6 +7,14 @@
     <div class="text-center">
         <h1 class="display-4">Parking Area Type</h1>
     </div>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
     
     @if (Model != null && Model.Any())
     {

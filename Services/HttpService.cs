@@ -13,7 +13,7 @@ public class HttpService : IHttpService
         _httpClient = httpClient;
     }
 
-    public async Task<bool> PostAsync<T>(string requestUrl, T payload)
+    public async Task<HttpResponseMessage> PostAsync<T>(string requestUrl, T payload)
     {
         string jsonPayLoad = JsonSerializer.Serialize(payload);
         var content = new StringContent(jsonPayLoad, Encoding.UTF8, "application/json");
@@ -21,19 +21,19 @@ public class HttpService : IHttpService
 
         response.EnsureSuccessStatusCode();
 
-        return await response.Content.ReadFromJsonAsync<bool>();
+        return response;
     }
 
-    public async Task<string> GetAsync(string requestUrl)
+    public async Task<HttpResponseMessage> GetAsync(string requestUrl)
     {
         var response = await _httpClient.GetAsync(requestUrl);
 
         response.EnsureSuccessStatusCode();
 
-        return await response.Content.ReadAsStringAsync();
+        return response;
     }
 
-    public async Task<bool> PutAsync<T>(string requestUrl, T payload)
+    public async Task<HttpResponseMessage> PutAsync<T>(string requestUrl, T payload)
     {
         string jsonPayload = JsonSerializer.Serialize(payload);
         var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
@@ -41,15 +41,15 @@ public class HttpService : IHttpService
 
         response.EnsureSuccessStatusCode();
 
-        return await response.Content.ReadFromJsonAsync<bool>();
+        return response;
     }
 
-    public async Task<bool> DeleteAsync(string requestUrl)
+    public async Task<HttpResponseMessage> DeleteAsync(string requestUrl)
     {
         var response = await _httpClient.DeleteAsync(requestUrl);
 
         response.EnsureSuccessStatusCode();
 
-        return await response.Content.ReadFromJsonAsync<bool>();
+        return response;
     }
 }

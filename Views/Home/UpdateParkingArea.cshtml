@@ -8,6 +8,13 @@
     <h1 class="display-4">Update Parking Area</h1>
 </div>
 
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
 <form asp-action="UpdateParkingArea" method="post">
     <div class="form-group">
         <label asp-for="ParkingAreaTypeID" class="control-label">Parking Area type Description</label>
@@ -39,11 +46,7 @@
         <span asp-validation-for="ParkingAreaName" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <input asp-for="Inactive" type="hidden" value="false" />
-    </div>
 
-
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="submit" class="btn btn-primary">Update</button>
     <a asp-action="ParkingAreas" class="btn btn-secondary">Cancel</a>
 </form>
