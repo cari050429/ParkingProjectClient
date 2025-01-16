@@ -19,14 +19,24 @@ namespace ParkingProjectClient.Controllers
             _logger = logger;
             _parkingService = parkingService;
         }
-        public async Task<IActionResult> ParkingAreas(string searchQuery)
+        public async Task<IActionResult> ParkingAreas(string parkingAreaName, string parkingAreaTypeDescription)
         {
             List<ParkingArea> parkingAreas = await _parkingService.GetAllParkingAreas();
 
-            if(!string.IsNullOrEmpty(searchQuery) && parkingAreas.Count > 0)
+            if(parkingAreas.Count > 0) 
             {
-                parkingAreas = parkingAreas.Where(pa => pa.ParkingAreaName.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
+                if(!string.IsNullOrEmpty(parkingAreaName))
+                {
+                    parkingAreas = parkingAreas.Where(pa => pa.ParkingAreaName.Contains(parkingAreaName, StringComparison.OrdinalIgnoreCase)).ToList();
+                }
+
+                if(!string.IsNullOrEmpty(parkingAreaTypeDescription))
+                {
+                    parkingAreas = parkingAreas.Where(pa => pa.ParkingAreaTypeDescription.Contains(parkingAreaTypeDescription, StringComparison.OrdinalIgnoreCase)).ToList();
+                }
             }
+
+            
 
             return View(parkingAreas);
         }
@@ -48,6 +58,10 @@ namespace ParkingProjectClient.Controllers
     string expirationDateFilter)
 {
     List<ParkingPermits> parkingPermits = await _parkingService.GetAllParkingPermits();
+    if(parkingPermits.Count > 0)
+    {
+
+    
 
 
     if (!string.IsNullOrEmpty(licensePlate))
@@ -86,7 +100,7 @@ namespace ParkingProjectClient.Controllers
             .Where(pp => pp.ExpirationDate.Date == expirationDate.Date)
             .ToList();
     }
-
+    }
     return View(parkingPermits);
 }
 

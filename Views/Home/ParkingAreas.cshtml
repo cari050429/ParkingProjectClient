@@ -2,7 +2,8 @@
 
 @{
     ViewData["Title"] = "Parking Areas";
-    string searchQuery = Context.Request.Query["searchQuery"].ToString() ?? "";
+    string parkingAreaName = Context.Request.Query["parkingAreaName"].ToString() ?? "";
+    string parkingAreaTypeDescription = Context.Request.Query["parkingAreaTypeDescription"].ToString() ?? "";
 }
 
 <div class="container mt-4">
@@ -18,14 +19,25 @@
     }
 
     <form method="get" class="mb-4">
-        <div class="input-group">
-            <input type="text" name="searchQuery" class="form-control" placeholder="Search by Parking Area Name" value="@searchQuery" />
-            <button type="submit" class="btn btn-primary">
-                <i class="bi bi-search"></i> Search
-            </button>
-            <a href="@Url.Action("ParkingAreas", "Home")" class="btn btn-secondary">
-                <i class="bi bi-x-circle"></i> Clear
-            </a>
+        <div class="row">
+            <div class="col-md-3">
+                <label for="parkingAreaName" class="form-label">Parking Area Name</label>
+                <input type="text" name="parkingAreaName" class="form-control" placeholder="Search by Parking Area Name" value="@parkingAreaName" />
+            </div>
+
+             <div class="col-md-3">
+                <label for="parkingAreaTypeDescription" class="form-label">Parking Area Type Description</label>
+                <input type="text" name="parkingAreaTypeDescription" class="form-control" placeholder="Search by Description" value="@parkingAreaTypeDescription" />
+            </div>
+
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary mt-4">
+                    <i class="bi bi-search"></i> Search
+                </button>
+                <a href="@Url.Action("ParkingAreas", "Home")" class="btn btn-secondary mt-4">
+                    <i class="bi bi-x-circle"></i> Clear
+                </a>
+            </div>
         </div>
     </form>
 
@@ -34,12 +46,11 @@
         <table class="table table-bordered table-striped table-hover">
             <thead class="thead-dark">
                 <tr>
-                    <th>Latitude</th>
                     <th>Date Created</th>
                     <th>Parking Area Type Description</th>
                     <th>Longitude</th>
+                    <th>Latitude</th>
                     <th>Parking Area Name</th>
-                    <th>Inactive</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
@@ -47,21 +58,11 @@
                 @foreach (var parkingarea in Model)
                 {
                     <tr>
-                        <td>@parkingarea.Latitude</td>
                         <td>@parkingarea.DateCreated</td>
                         <td>@parkingarea.ParkingAreaTypeDescription</td>
                         <td>@parkingarea.Longitude</td>
+                        <td>@parkingarea.Latitude</td>
                         <td>@parkingarea.ParkingAreaName</td>
-                        <td>
-                            @if (parkingarea.Inactive)
-                            {
-                                <span class="badge bg-danger">Inactive</span>
-                            }
-                            else
-                            {
-                                <span class="badge bg-success">Active</span>
-                            }
-                        </td>
                         <td class="text-center">
                             <a href="@Url.Action("UpdateParkingArea", "Home", new { id = parkingarea.Id })" class="btn btn-warning me-2">
                                 <i class="bi bi-pencil-square"></i> Update
