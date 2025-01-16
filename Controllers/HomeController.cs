@@ -52,10 +52,10 @@ namespace ParkingProjectClient.Controllers
 
         public async Task<IActionResult> ParkingPermits(
             string parkingAreaName,
-    string licensePlate, 
-    string inactiveFilter, 
-    string effectiveDateFilter, 
-    string expirationDateFilter)
+            string licensePlate, 
+            string inactiveFilter, 
+            string effectiveDateFilter, 
+            string expirationDateFilter)
 {
     List<ParkingPermits> parkingPermits = await _parkingService.GetAllParkingPermits();
     if(parkingPermits.Count > 0)
@@ -90,14 +90,14 @@ namespace ParkingProjectClient.Controllers
     if (DateTime.TryParse(effectiveDateFilter, out DateTime effectiveDate))
     {
         parkingPermits = parkingPermits
-            .Where(pp => pp.EffectiveDate.Date == effectiveDate.Date)
+            .Where(pp => pp.EffectiveDate.Date >= effectiveDate.Date)
             .ToList();
     }
 
     if (DateTime.TryParse(expirationDateFilter, out DateTime expirationDate))
     {
         parkingPermits = parkingPermits
-            .Where(pp => pp.ExpirationDate.Date == expirationDate.Date)
+            .Where(pp => pp.ExpirationDate.Date <= expirationDate.Date)
             .ToList();
     }
     }
