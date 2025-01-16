@@ -4,28 +4,32 @@
     ViewData["Title"] = "Create Parking Area Type";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Create Parking Area Type</h1>
+<div class="container mt-4">
+    <div class="text-center mb-4">
+        <h1 class="display-4">Create Parking Area Type</h1>
+    </div>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+
+    <form asp-action="CreateParkingAreaType" method="post">
+        <div class="mb-3">
+            <label asp-for="ParkingAreaTypeDescription" class="form-label">Parking Area Name</label>
+            <input asp-for="ParkingAreaTypeDescription" class="form-control" />
+            <span asp-validation-for="ParkingAreaTypeDescription" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary me-2">
+                <i class="bi bi-check-circle"></i> Create
+            </button>
+            <a asp-action="ParkingAreaTypes" class="btn btn-secondary">
+                <i class="bi bi-x-circle"></i> Cancel
+            </a>
+        </div>
+    </form>
 </div>
-
-@if (ViewBag.ErrorMessage != null)
-{
-    <div class="alert alert-danger">
-        @ViewBag.ErrorMessage
-    </div>
-}
-
-<form asp-action="CreateParkingAreaType" method="post">
-
-
-    <div class="form-group">
-        <label asp-for="ParkingAreaTypeDescription" class="control-label">Parking Area Type Description</label>
-        <input asp-for="ParkingAreaTypeDescription" class="form-control" />
-        <span asp-validation-for="ParkingAreaTypeDescription" class="text-danger"></span>
-    </div>
-
-
-    <button type="submit" class="btn btn-primary">Create</button>
-    <a asp-action="ParkingAreaTypes" class="btn btn-secondary">Cancel</a>
-</form>
-

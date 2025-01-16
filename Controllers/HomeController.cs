@@ -19,9 +19,14 @@ namespace ParkingProjectClient.Controllers
             _logger = logger;
             _parkingService = parkingService;
         }
-        public async Task<IActionResult> ParkingAreas()
+        public async Task<IActionResult> ParkingAreas(string searchQuery)
         {
             List<ParkingArea> parkingAreas = await _parkingService.GetAllParkingAreas();
+
+            if(!string.IsNullOrEmpty(searchQuery) && parkingAreas.Count > 0)
+            {
+                parkingAreas = parkingAreas.Where(pa => pa.ParkingAreaName.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
 
             return View(parkingAreas);
         }
@@ -38,23 +43,28 @@ namespace ParkingProjectClient.Controllers
         public async Task<IActionResult> ParkingPermits(string searchQuery)
 
         {
-            List<ParkingPermits> parkingPermitsList = await _parkingService.GetAllParkingPermitsByArea();
+            List<ParkingPermits> parkingPermits = await _parkingService.GetAllParkingPermitsByArea();
 
-            if(!string.IsNullOrEmpty(searchQuery) && parkingPermitsList.Count > 0)
+            if(!string.IsNullOrEmpty(searchQuery) && parkingPermits.Count > 0)
             {
-                parkingPermitsList = parkingPermitsList.Where(p => p.LicensePlate.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
+                parkingPermits = parkingPermits.Where(pp => pp.LicensePlate.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
             }
 
-            return View(parkingPermitsList);
+            return View(parkingPermits);
 
         }
 
-        public async Task<IActionResult> ParkingAreaTypes()
+        public async Task<IActionResult> ParkingAreaTypes(string searchQuery)
 
         {
-            List<ParkingAreaTypes> parkingAreasTypesList = await _parkingService.GetAllParkingAreaTypes();
+            List<ParkingAreaTypes> parkingAreasTypes = await _parkingService.GetAllParkingAreaTypes();
 
-            return View(parkingAreasTypesList);
+             if(!string.IsNullOrEmpty(searchQuery) && parkingAreasTypes.Count > 0)
+            {
+                parkingAreasTypes = parkingAreasTypes.Where(pt => pt.ParkingAreaTypeDescription.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            return View(parkingAreasTypes);
 
         }
 
