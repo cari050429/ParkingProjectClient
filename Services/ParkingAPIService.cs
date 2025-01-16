@@ -16,81 +16,134 @@ namespace ParkingProjectClient.Services
 
         public async Task<List<ParkingPermits>> GetAllParkingPermitsByAreaApi()
         {
-
             var response = await _httpservice.GetAsync("http://localhost:5180/api/Parking/getParkingPermits");
 
-            // Deserialize the JSON response into a List of ParkingPermitsArea
+            // Deserialize the JSON response into a List of ParkingPermits
             return JsonSerializer.Deserialize<List<ParkingPermits>>(response, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true // Handles JSON with different casing
             });
         }
 
-        // public ParkingPermits GetParkingPermitByIDApi(int parkingId)
-        // {
-        //     List<ParkingPermits> parkingPermits = new List<ParkingPermits>();
+        public async Task<ParkingPermitDetails> GetParkingPermitById(int id)
+        {
+            var response = await _httpservice.GetAsync($"http://localhost:5180/api/Parking/getParkingPermitById/{id}");
 
-        //     var parkingpermit1 = new ParkingPermits
-        //     {
-        //         Id = 1,
-        //         ParkingAreaID = 101,
-        //         EffectiveDate = DateTime.Now,
-        //         ExpirationDate = DateTime.Now.AddMonths(6),
-        //         LicensePlate = "ABC123",
-        //         ParkingAreaName = "Flamingo",
-        //         CreateDate = DateTime.Now,
-        //         Inactive = false,
-        //         ParkingAreaTypeId = 2,
-        //         Longitude = -29.99493,
-        //         Latitude = -49.003830,
-        //         DateCreated = DateTime.Now,
+            // Deserialize the JSON response into ParkingPermitDetails
+            return JsonSerializer.Deserialize<ParkingPermitDetails>(response, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true // Handles JSON with different casing
+            });
+        }
 
+        public async Task<ParkingArea> GetParkingAreaById(int id)
+        {
+            var response = await _httpservice.GetAsync($"http://localhost:5180/api/Parking/getParkingAreaById/{id}");
 
-        //     };
-        //     var parkingpermit2 = new ParkingPermits
-        //     {
-        //         Id = 2,
-        //         ParkingAreaID = 2,
-        //         EffectiveDate = DateTime.Now,
-        //         ExpirationDate = DateTime.Now.AddMonths(6),
-        //         LicensePlate = "ABC123",
-        //         ParkingAreaName = "Flamingo",
-        //         CreateDate = DateTime.Now,
-        //         Inactive = false,
-        //         ParkingAreaTypeId = 2,
-        //         Longitude = -29.99493,
-        //         Latitude = -49.003830,
-        //         DateCreated = DateTime.Now,
+            // Deserialize the JSON response into ParkingPermitDetails
+            return JsonSerializer.Deserialize<ParkingArea>(response, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true // Handles JSON with different casing
+            });
+        }
 
+        public async Task<ParkingAreaTypes> GetParkingAreaTypeById(int id)
+        {
+            var response = await _httpservice.GetAsync($"http://localhost:5180/api/Parking/getParkingAreaTypeById/{id}");
 
-        //     };
-        //     var parkingpermit3 = new ParkingPermits
-        //     {
-        //         Id = 3,
-        //         ParkingAreaID = 2,
-        //         EffectiveDate = DateTime.Now,
-        //         ExpirationDate = DateTime.Now.AddMonths(6),
-        //         LicensePlate = "ABC123",
-        //         ParkingAreaName = "Flamingo",
-        //         CreateDate = DateTime.Now,
-        //         Inactive = false,
-        //         ParkingAreaTypeId = 2,
-        //         Longitude = -29.99493,
-        //         Latitude = -49.003830,
-        //         DateCreated = DateTime.Now,
+            // Deserialize the JSON response into ParkingPermitDetails
+            return JsonSerializer.Deserialize<ParkingAreaTypes>(response, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true // Handles JSON with different casing
+            });
+        }
 
+        public async Task<List<ParkingArea>> GetAllParkingAreas()
+        {
+            var response = await _httpservice.GetAsync("http://localhost:5180/api/Parking/getParkingAreas");
 
-        //     };
+            // Deserialize the JSON response into a List of ParkingArea
+            return JsonSerializer.Deserialize<List<ParkingArea>>(response, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true // Handles JSON with different casing
+            });
+        }
 
-        //     parkingPermits.Add(parkingpermit1);
-        //     parkingPermits.Add(parkingpermit2);
-        //     parkingPermits.Add(parkingpermit3);
+        public async Task<bool> CreateParkingPermit(ParkingPermits parkingPermitCreation)
+        {
+            var response = await _httpservice.PostAsync(
+                "http://localhost:5180/api/Parking/createParkingPermit",
+                parkingPermitCreation
+            );
 
-        //     var parkingPermit = parkingPermits.FirstOrDefault(item => item.Id == parkingId);
+            return response;
+        }
 
+        public async Task<bool> CreateParkingArea(ParkingArea parkingareacreate)
+        {
+            var response = await _httpservice.PostAsync(
+                "http://localhost:5180/api/Parking/CreateParkingArea",
+                parkingareacreate
+            );
 
-        //     return parkingPermit;
+            return response;
+        }
 
-        // }
+        public async Task<List<ParkingAreaTypes>> GetAllParkingAreaTypes()
+        {
+            var response = await _httpservice.GetAsync("http://localhost:5180/api/Parking/getParkingTypes");
+
+            // Deserialize the JSON response into a List of ParkingAreaTypes
+            return JsonSerializer.Deserialize<List<ParkingAreaTypes>>(response, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true // Handles JSON with different casing
+            });
+        }
+
+        public async Task<bool> CreateParkingAreaType(ParkingAreaTypes parkingareatypecreation)
+        {
+            var response = await _httpservice.PostAsync(
+                "http://localhost:5180/api/Parking/createParkingAreaType",
+                parkingareatypecreation
+            );
+
+            return response;
+        }
+
+        public async Task<bool> DeleteParkingPermit(int id)
+        {
+            var response = await _httpservice.DeleteAsync($"http://localhost:5180/api/Parking/deleteParkingPermit/{id}");
+            return response;
+        }
+
+        public async Task<bool> DeleteParkingArea(int id)
+        {
+            var response = await _httpservice.DeleteAsync($"http://localhost:5180/api/Parking/deleteParkingArea/{id}");
+            return response;
+        }
+
+        public async Task<bool> DeleteParkingAreaType(int id)
+        {
+            var response = await _httpservice.DeleteAsync($"http://localhost:5180/api/Parking/deleteParkingAreaType/{id}");
+            return response;
+        }
+
+        public async Task<bool> UpdateParkingPermit(ParkingPermits updateParkingPermit)
+        {
+            var response = await _httpservice.PutAsync($"http://localhost:5180/api/Parking/UpdateParkingPermit/{updateParkingPermit.Id.Value}", updateParkingPermit );
+            return response;
+        }
+
+        public async Task<bool> UpdateParkingArea(ParkingArea updateParkingArea)
+        {
+            var response = await _httpservice.PutAsync($"http://localhost:5180/api/Parking/updateParkingArea/{updateParkingArea.Id}", updateParkingArea);
+            return response;
+        }
+
+        public async Task<bool> UpdateParkingAreaType(ParkingAreaTypes updateParkingAreaType)
+        {
+            var response = await _httpservice.PutAsync($"http://localhost:5180/api/Parking/deleteParkingAreaType/{updateParkingAreaType.Id}", updateParkingAreaType);
+            return response;
+        }
     }
 }

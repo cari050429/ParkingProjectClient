@@ -1,0 +1,57 @@
+@model ParkingProjectClient.Models.ParkingArea
+
+@{
+    ViewData["Title"] = "Create Parking Area";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Create Parking Area</h1>
+</div>
+
+<form asp-action="CreateParkingArea" method="post">
+    <div class="form-group">
+        <label asp-for="ParkingAreaTypeID" class="control-label">Parking Area type Description</label>
+        <select asp-for="ParkingAreaTypeID" class="form-control" id="parkingAreaTypeSelect" onchange="updateParkingAreaTypeName()">
+            <option value="">Select a Parking Area Type</option>
+            @foreach (var area in ViewBag.ParkingAreas as SelectList)
+            {
+                <option value="@area.Value">@area.Text</option>
+            }
+        </select>
+        <span asp-validation-for="ParkingAreaTypeID" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+    <label asp-for="Latitude" class="control-label">Latitude</label>
+    <input asp-for="Latitude" class="form-control" type="number" step="0.000001" min="-90" max="90" />
+    <span asp-validation-for="Latitude" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+    <label asp-for="Longitude" class="control-label">Longitude</label>
+    <input asp-for="Longitude" class="form-control" type="number" step="0.000001" min="-180" max="180" />
+    <span asp-validation-for="Longitude" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ParkingAreaName" class="control-label">Parking Area Name</label>
+        <input asp-for="ParkingAreaName" class="form-control" />
+        <span asp-validation-for="ParkingAreaName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input asp-for="Inactive" type="hidden" value="false" />
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-action="ParkingAreas" class="btn btn-secondary">Cancel</a>
+</form>
+@* 
+<script>
+    function updateParkingAreaTypeName() {
+        var select = document.getElementById("parkingAreaTypeSelect");
+        var selectedText = select.options[select.selectedIndex].text; 
+        document.getElementById("ParkingAreaTypeDescription").value = selectedText; 
+    }
+</script> *@

@@ -1,0 +1,29 @@
+@model ParkingProjectClient.Models.ParkingAreaTypes
+
+@{
+    ViewData["Title"] = "Create Parking Area Type";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Create Parking Area Type</h1>
+</div>
+
+<form asp-action="CreateParkingAreaType" method="post">
+
+
+    <div class="form-group">
+        <label asp-for="ParkingAreaTypeDescription" class="control-label">Parking Area Name</label>
+        <input asp-for="ParkingAreaTypeDescription" class="form-control" />
+        <span asp-validation-for="ParkingAreaTypeDescription" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input asp-for="Id" type="hidden" value="0" />
+        <input asp-for="Inactive" type="hidden" value="false" />
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-action="ParkingAreaTypes" class="btn btn-secondary">Cancel</a>
+</form>
+

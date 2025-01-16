@@ -1,20 +1,27 @@
 ﻿@model List<ParkingProjectClient.Models.ParkingPermits>
 
 @{
-    ViewData["Title"] = "Parking Areas";
+    ViewData["Title"] = "Parking Permits";
+    string searchQuery = Context.Request.Query["searchQuery"].ToString() ?? "";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Parking Areas</h1>
+    <h1 class="display-4">Parking Permits</h1>
 </div>
+
+<form method="get" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="searchQuery" class="form-control" placeholder="Search by License Plate" value="@searchQuery"/>
+        <button type="submit" class="btn btn-primary">Search</button>
+        <a href="@Url.Action("ParkingPermits", "Home")" class="btn btn-secondary">Clear</a>
+    </div>
+</form>
 
 @if (Model != null && Model.Any())
 {
     <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Parking Area ID</th>
                 <th>Effective Date</th>
                 <th>Expiration Date</th>
                 <th>License Plate</th>
@@ -27,7 +34,7 @@
             {
                 <tr>
                     <td colspan="7">
-                        <a href="@Url.Action("ParkingPermits", "Home", new { id = permit.Id })" >
+                        <a href="@Url.Action("ParkingPermitDetails", "Home", new { id = permit.Id })" >
                             <div class="row">
                                 <div class="col">@permit.EffectiveDate.ToShortDateString()</div>
                                 <div class="col">@permit.ExpirationDate.ToShortDateString()</div>
@@ -46,3 +53,10 @@ else
 {
     <p>No parking areas available.</p>
 }
+
+<div class="mb-3 text-right">
+    <a href="@Url.Action("CreateParkingPermit", "Home")" class="btn btn-primary">
+        Create New Parking Permit
+    </a>
+</div>
+

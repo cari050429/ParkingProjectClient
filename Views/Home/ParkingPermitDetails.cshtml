@@ -15,23 +15,32 @@
             <tr>
                 <th>Effective Date</th>
                 <th>Expiration Date</th>
+                <th>Longitude</th>
+                <th>Latitude</th>
+                <th>Date Created</th>
+                <th>Parking Area Type Description</th>
                 <th>License Plate</th>
                 <th>Parking Area Name</th>
                 <th>Inactive</th>
-                <th>Longitude</th>
-                <th>Latitude</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>@Model.Id</td>
                 <td>@Model.EffectiveDate.ToShortDateString()</td>
                 <td>@Model.ExpirationDate.ToShortDateString()</td>
+                <td>@Model.Longitude</td>
+                <td>@Model.Latitude</td>
+                <td>@Model.DateCreated.ToShortDateString()</td>
+                <td>@Model.ParkingAreaTypeDescription</td>
                 <td>@Model.LicensePlate</td>
                 <td>@Model.ParkingAreaName</td>
                 <td>@Model.Inactive</td>
-                <td>@Model.Longitude</td>
-                <td>@Model.Latitude</td>
+            </tr>
+            <tr>
+                <td colspan="9" class="text-center">
+                    <a href="@Url.Action("UpdateParkingPermit", "Home", new { id = Model.Id })" class="btn btn-warning">Update</a>
+                    <a href="@Url.Action("DeleteParkingPermit", "Home", new { id = Model.Id })" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this parking permit?');">Delete</a>
+                </td>
             </tr>
         </tbody>
     </table>

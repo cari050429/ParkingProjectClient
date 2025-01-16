@@ -3,9 +3,9 @@
 public interface IHttpService
 
 {
-    public Task<string> PostAsync<T>(string requestUrl, T payload);
+    public Task<bool> PostAsync<T>(string requestUrl, T payload);
     public Task<string> GetAsync(string requestUrl);
-    // public Task<string> PutAsync<T>(string requestUrl, T payload);
-    // public Task<string> DeleteAsync<T>(string request, T payload);
+    public Task<bool> PutAsync<T>(string requestUrl, T payload);
+    public Task<bool> DeleteAsync(string request);
     
 }

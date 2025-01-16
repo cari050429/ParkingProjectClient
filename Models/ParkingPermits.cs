@@ -10,8 +10,10 @@ namespace ParkingProjectClient.Models
         public string ParkingAreaName { get; set; }
 
         [Required]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
+        [Required]
+        public int ParkingAreaId { get; set; }
 
         [Required]
         public bool Inactive { get; set; }

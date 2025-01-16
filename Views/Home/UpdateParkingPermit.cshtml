@@ -1,0 +1,53 @@
+@model ParkingProjectClient.Models.ParkingPermits
+
+@{
+    ViewData["Title"] = "Update Parking Permit";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Update Parking Permit</h1>
+</div>
+
+<form asp-action="UpdateParkingPermit" method="post">
+    <div class="form-group">
+    <label asp-for="ParkingAreaId" class="control-label">Parking Area Name</label>
+    <select asp-for="ParkingAreaId" 
+            asp-items="ViewBag.ParkingAreas"
+            class="form-control" 
+            id="parkingAreaSelect">
+    </select>
+    <span asp-validation-for="ParkingAreaId" class="text-danger"></span>
+</div>
+
+    <div class="form-group">
+        <label asp-for="EffectiveDate" class="control-label">Effective Date</label>
+        <input asp-for="EffectiveDate" class="form-control" type="date" />
+        <span asp-validation-for="EffectiveDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ExpirationDate" class="control-label">Expiration Date</label>
+        <input asp-for="ExpirationDate" class="form-control" type="date" />
+        <span asp-validation-for="ExpirationDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LicensePlate" class="control-label">License Plate</label>
+        <input asp-for="LicensePlate" class="form-control" />
+        <span asp-validation-for="LicensePlate" class="text-danger"></span>
+    </div>
+
+   <div class="form-group">
+        <label asp-for="Inactive" class="control-label">Mark as Inactive</label>
+        <div class="form-check">
+            <input asp-for="Inactive" type="checkbox" class="form-check-input" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input asp-for="Id" type="hidden" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a asp-action="ParkingPermits" class="btn btn-secondary">Cancel</a>
+</form>
