@@ -136,13 +136,13 @@ namespace ParkingProjectClient.Services
 
         public async Task<bool> UpdateParkingArea(ParkingArea updateParkingArea)
         {
-            var response = await _httpservice.PutAsync($"http://localhost:5180/api/Parking/updateParkingArea/{updateParkingArea.Id}", updateParkingArea);
+            var response = await _httpservice.PutAsync($"http://localhost:5180/api/Parking/UpdateParkingArea/{updateParkingArea.Id}", updateParkingArea);
             return response;
         }
 
         public async Task<bool> UpdateParkingAreaType(ParkingAreaTypes updateParkingAreaType)
         {
-            var response = await _httpservice.PutAsync($"http://localhost:5180/api/Parking/deleteParkingAreaType/{updateParkingAreaType.Id}", updateParkingAreaType);
+            var response = await _httpservice.PutAsync($"http://localhost:5180/api/Parking/UpdateParkingAreaType/{updateParkingAreaType.Id}", updateParkingAreaType);
             return response;
         }
     }

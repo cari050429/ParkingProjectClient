@@ -206,8 +206,27 @@ namespace ParkingProjectClient.Controllers
             {
                 return RedirectToAction("ParkingAreas"); 
             }
-             ViewBag.ErrorMessage = "There was an issue updating the parking permit.";
+             ViewBag.ErrorMessage = "There was an issue updating the parking area.";
             return View(updateParkingArea);
+        }
+
+        public async Task <ActionResult> UpdateParkingAreaType(int id)
+        {
+            ParkingAreaTypes currentParkingAreaType = await _parkingService.GetParkingAreaTypeById(id);
+            return View(currentParkingAreaType);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UpdateParkingAreaType(ParkingAreaTypes updateParkingAreaTypes)
+        {
+            bool isCreated = await _parkingService.UpdateParkingAreaType(updateParkingAreaTypes);
+
+            if (isCreated)
+            {
+                return RedirectToAction("ParkingAreaTypes"); 
+            }
+             ViewBag.ErrorMessage = "There was an issue updating the parking area type.";
+            return View(updateParkingAreaTypes);
         }
     }
 }
